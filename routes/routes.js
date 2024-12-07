@@ -21,8 +21,17 @@ var upload = multer({
 }).single('image')
 
 
-router.get('/', (req, res) => {
-    res.render('index', { titulo: 'Inicio' })
+router.get('/', async (req, res) => {
+
+    try {
+        const users = await User.find({})
+
+        res.render('index', { titulo: 'Inicio', users: users })
+    } 
+    catch(error) {
+        res.json ({ message: error.message })
+        
+    }
 })
 
 router.get('/add', (req, res) => {
